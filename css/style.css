@@ -1,0 +1,268 @@
+/* ===== NEON SYNTHWAVE — DRIFT! ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap');
+
+:root {
+  --neon-cyan: #00ffff;
+  --neon-magenta: #ff00ff;
+  --neon-purple: #bf00ff;
+  --bg-dark: #0a0a12;
+  --panel-bg: rgba(10, 10, 25, 0.92);
+  --glow-cyan: 0 0 20px #00ffff, 0 0 40px #00ffff80;
+  --glow-magenta: 0 0 20px #ff00ff, 0 0 40px #ff00ff80;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--bg-dark);
+  color: #e0e0ff;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+#game-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+/* ----- HUD ----- */
+#hud {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  gap: 24px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#speedometer, #drift-score {
+  background: var(--panel-bg);
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  padding: 12px 20px;
+  box-shadow: var(--glow-cyan);
+  font-family: 'Orbitron', monospace;
+}
+
+#speed-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+#speed-unit {
+  font-size: 0.75rem;
+  margin-left: 6px;
+  opacity: 0.9;
+}
+
+#drift-value {
+  font-size: 1.5rem;
+  color: var(--neon-magenta);
+  text-shadow: 0 0 10px var(--neon-magenta);
+}
+
+/* ----- Car Picker Overlay ----- */
+#car-picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a1a2a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
+
+#car-picker-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#car-picker-panel {
+  background: var(--panel-bg);
+  border: 3px solid var(--neon-cyan);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: var(--glow-cyan), inset 0 0 60px rgba(0, 255, 255, 0.05);
+  text-align: center;
+}
+
+#car-picker-panel h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 15px var(--neon-cyan);
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+
+#car-display-3d {
+  width: 100%;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--neon-purple);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#car-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+#car-selector button {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--neon-magenta);
+  background: transparent;
+  color: var(--neon-magenta);
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+#car-selector button:hover {
+  background: var(--neon-magenta);
+  color: #0a0a12;
+  box-shadow: var(--glow-magenta);
+}
+
+#car-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e0e0ff;
+  min-width: 180px;
+}
+
+#car-count {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.85rem;
+  color: var(--neon-magenta);
+  margin-left: 4px;
+}
+
+#neon-customizer {
+  margin-bottom: 24px;
+}
+
+#neon-customizer label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--neon-cyan);
+  margin-bottom: 8px;
+}
+
+#neon-customizer input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  vertical-align: middle;
+}
+
+#neon-hex {
+  margin-left: 12px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  color: var(--neon-cyan);
+}
+
+#start-race {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 14px 40px;
+  border: 2px solid var(--neon-cyan);
+  background: transparent;
+  color: var(--neon-cyan);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.1em;
+}
+
+#start-race:hover {
+  background: var(--neon-cyan);
+  color: var(--bg-dark);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ----- Loading ----- */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  transition: opacity 0.5s ease;
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(0, 255, 255, 0.2);
+  border-top-color: var(--neon-cyan);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+#loading-overlay p {
+  margin-top: 16px;
+  font-family: 'Orbitron', monospace;
+  color: var(--neon-cyan);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Screen shake applied via JS on body */
+body.shake {
+  animation: screenShake 0.15s ease-out;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 2px); }
+  40% { transform: translate(4px, -2px); }
+  60% { transform: translate(-2px, 4px); }
+  80% { transform: translate(2px, -4px); }
+}
