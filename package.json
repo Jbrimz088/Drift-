@@ -1,0 +1,14 @@
+{
+  "name": "drift-neon-racing",
+  "version": "1.0.0",
+  "description": "Low-poly 3D multiplayer drifting game — Neon Synthwave",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}

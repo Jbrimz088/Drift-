@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DRIFT! — Neon Synthwave Racing</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud">
+      <div id="speedometer">
+        <span id="speed-value">0</span>
+        <span id="speed-unit">KM/H</span>
+      </div>
+      <div id="drift-score">
+        <span id="drift-value">0</span>
+        <span>DRIFT</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Car Picker Overlay -->
+  <div id="car-picker-overlay">
+    <div id="car-picker-panel">
+      <h1>CHOOSE YOUR RIDE</h1>
+      <div id="car-display-3d"></div>
+      <div id="car-selector">
+        <button type="button" id="car-prev" aria-label="Previous car">◀ Prev</button>
+        <span id="car-name">Porsche 911 GT3 RS</span>
+        <span id="car-count">1 / 2</span>
+        <button type="button" id="car-next" aria-label="Next car">Next ▶</button>
+      </div>
+      <div id="neon-customizer">
+        <label>Underglow Color</label>
+        <input type="color" id="neon-color" value="#00ffff" />
+        <span id="neon-hex">#00ffff</span>
+      </div>
+      <button type="button" id="start-race">START RACE</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+    <p>Loading...</p>
+  </div>
+
+  <script>
+    // If scripts take too long, hide loading after 2.5s so user sees the page
+    setTimeout(function() {
+      var el = document.getElementById('loading-overlay');
+      if (el && !el.classList.contains('hidden')) el.classList.add('hidden');
+    }, 2500);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
